@@ -13,13 +13,22 @@ namespace xbimDemo
     {
         static void Main(string[] args)
         {
-            var ModelName = "hmb_knivsta.ifc";
-            var ModelPath = ModelName;
-            var DestinationPath = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName.Replace(".ifc", "") + ".wexbim";
-            WEXBIMFactory.CreateWEXFileFromIFCModel(ModelPath, DestinationPath);
+
+            string ModelName = "thermador_oven.ifc";
+            string Path = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName;
+
+            var ifcRepo = new IFCRepository(Path);
+            ifcRepo.GetHierarchy(null);
 
             Console.WriteLine("Press Any Key to Exit");
             Console.ReadKey();
+        }
+
+        static void CreateWexFile (string IfcFileName)
+        {
+            string IfcFilePath = "C:\\Users\\zno\\source\\repos\\ifcViewer\\ifcViewer\\IFC_Models\\" + IfcFileName;
+            var WexFilePath = "C:\\Users\\zno\\source\\repos\\ifcViewer\\ifcViewer\\wwwroot\\wexbim_files" + IfcFileName.Replace(".ifc", "") + ".wexbim";
+            WEXBIMFactory.CreateWEXFileFromIFCModel(IfcFilePath, WexFilePath);
         }
     }
 }
