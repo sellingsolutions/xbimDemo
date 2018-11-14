@@ -86,14 +86,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IFCCleaner.cs" />
     <Compile Include="IFCRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Spaces.cs" />
     <Compile Include="WEXBIMFactory.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="albano.ifc" />
     <None Include="App.config" />
+    <None Include="karl_andersson_table.ifc" />
     <None Include="hmb_knivsta.ifc" />
     <None Include="four_story_office_building.ifc" />
     <None Include="otc_conference_center.ifc" />

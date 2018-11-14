@@ -54,6 +54,7 @@ namespace xbimDemo
         {
             var Hierarchy = new List<IIfcObjectDefinition>();
 
+            
             //var TypeObjects = Model.Instances.Where<IIfcTypeObject>(s=>s.EntityLabel > 0);
             var Spaces = Model.Instances.Where<IIfcSpace>(s => s.EntityLabel > 0);
             var Zones = Model.Instances.Where<IIfcZone>(s => s.EntityLabel > 0);
@@ -67,6 +68,7 @@ namespace xbimDemo
             foreach (IIfcSpace Space in Spaces)
             {
                 Console.WriteLine($"Space: {Space.LongName}  {Space.Name}");
+                Space.ObjectType = new IfcLabel("");
 
                 var Props = GetPropsForProduct(Space);
                 foreach (IIfcPropertySingleValue Prop in Props)
@@ -107,7 +109,7 @@ namespace xbimDemo
 
 
 
-            //only spatial elements can contain building elements
+            // Only spatial elements can contain building elements
             IIfcSpatialStructureElement SpatialElement = Object as IIfcSpatialStructureElement;
             if (SpatialElement != null)
             {

@@ -14,16 +14,16 @@ namespace xbimDemo
         static void Main(string[] args)
         {
 
-            string ModelName = "thermador_oven.ifc";
+            string ModelName = "albano.ifc";
             string Path = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName;
 
-            var ifcRepo = new IFCRepository(Path);
-            ifcRepo.GetHierarchy(null);
+            new IFCCleaner(Path).Run();
 
             Console.WriteLine("Press Any Key to Exit");
             Console.ReadKey();
         }
 
+        // Creates a new wexbim viewer file and stores it in the ifcViewer project
         static void CreateWexFile (string IfcFileName)
         {
             string IfcFilePath = "C:\\Users\\zno\\source\\repos\\ifcViewer\\ifcViewer\\IFC_Models\\" + IfcFileName;
