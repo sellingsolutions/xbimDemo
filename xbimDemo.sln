@@ -3,18 +3,30 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28010.2050
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xbimDemo", "xbimDemo\xbimDemo.csproj", "{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildcraftCore", "..\BuildcraftCore\BuildcraftCore\BuildcraftCore.csproj", "{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B5dExample", "..\Buildcraft.Core.Example\B5dExample.csproj", "{ECDD8422-8FA1-47C1-A937-679E840F92D8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
+		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}.Debug|x64.ActiveCfg = Debug|x64
+		{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}.Debug|x64.Build.0 = Debug|x64
+		{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}.Release|Any CPU.ActiveCfg = Release|x64
+		{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}.Release|x64.ActiveCfg = Release|x64
+		{E4C23AC4-D418-412C-B64E-BF25D6B2AD73}.Release|x64.Build.0 = Release|x64
+		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Debug|Any CPU.ActiveCfg = Debug|x64
+		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Debug|x64.ActiveCfg = Debug|x64
+		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Debug|x64.Build.0 = Debug|x64
+		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Release|Any CPU.ActiveCfg = Release|x64
+		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Release|x64.ActiveCfg = Release|x64
+		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

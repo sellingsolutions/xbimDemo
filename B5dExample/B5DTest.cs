@@ -11,15 +11,27 @@ using BuildcraftCore.B5D.ProjectNodes;
 using BuildcraftCore.B5D;
 
 
-namespace xbimDemo
+namespace B5dExample
 {
     public class B5DTest
     {
         private IFCRepository ifcRepo = new IFCRepository();
 
-        public void CreateProjectTree ()
+        /*  We don't have to map the ifc location/3d/geometry properties
+         *  We can just convert each ifc object to obj and then to glTF and store the glTF properties in Starcounter
+         *
+         * 
+
+         *
+         * 1. Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
+         * 2. Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
+         * 3. Use isDefinedBy to retrieve all of the properties for each node
+         * 4. 
+        */
+
+
+        public void CreateProjectTree (IIfcProject ifcProject)
         {
-            IIfcProject ifcProject = ifcRepo.Model.Instances.FirstOrDefault<IIfcProject>();
             B5dProjectNode b5dProject = new B5dProjectNode();
 
             BuildTree(null, null, ifcProject);
@@ -31,7 +43,12 @@ namespace xbimDemo
             B5dProjectNode b5dNode = new B5dProjectNode()
             {
                 TypeSpecifier = ifcObject.GetType().Name,
-                Name = ifcObject.Name
+                Name = ifcObject.Name,
+                WhatIs = new B5dPhysical()
+                {
+                    TypeSpecifier = ifcObject.GetType().Name,
+                    Name = ifcObject.Name
+                }
             };
 
             IfcRoot b5dIfcObject = new IfcRoot()
@@ -47,7 +64,7 @@ namespace xbimDemo
         {
             B5dProjectNodeChild ChildRelationship = new B5dProjectNodeChild()
             {
-                // A Space [WhatIs] is a [NodeChild] to [ToWhat] the Story
+                // A Space [WhatIs] is a NodeChild to [ToWhat] the Story
                 WhatIs = b5dChild,
                 ToWhat = b5dParent
             };
@@ -62,20 +79,19 @@ namespace xbimDemo
                 B5dProjectNodeChild ChildRelationship = CreateNodeChildFrom(b5dParent, b5dChild);
             }
 
-            var spatialElement = ifcChild as IIfcSpatialStructureElement;
-            if (spatialElement != null)
+            // Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
+            if (ifcChild is IIfcSpatialStructureElement spatialElement)
             {
-                var containedElements = spatialElement.ContainsElements.SelectMany(rel => rel.RelatedElements);
+                IEnumerable<IIfcProduct> containedElements = spatialElement.ContainsElements.SelectMany(rel => rel.RelatedElements);
                 foreach (var element in containedElements)
                 {
                     BuildTree(b5dChild, ifcChild, element);
-                    Console.WriteLine($"{element.GetType().Name} - {element.Name} ");
                 }
             }
 
+            // Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
             foreach (var relatedObject in ifcChild.IsDecomposedBy.SelectMany(r => r.RelatedObjects))
             {
-                Console.WriteLine($"{relatedObject.GetType().Name} - {relatedObject.Name}");
                 BuildTree(b5dChild, ifcChild, relatedObject);
             }
 

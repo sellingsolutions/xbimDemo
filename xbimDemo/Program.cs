@@ -17,7 +17,7 @@ namespace xbimDemo
             string ModelName = "albano.ifc";
             string Path = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName;
 
-            new IFCCleaner(Path).Run();
+            new B5DTest().CreateProjectTree();
 
             Console.WriteLine("Press Any Key to Exit");
             Console.ReadKey();

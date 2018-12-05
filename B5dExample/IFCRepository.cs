@@ -8,7 +8,7 @@ using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
 using Xbim.Ifc4.MeasureResource;
 
-namespace xbimDemo
+namespace B5dExample
 {
     public class IFCRepository
     {
@@ -127,7 +127,7 @@ namespace xbimDemo
             if (Object != null)
             {
                 // ifcRelAggregates to get spatial decomposition of spatial structure elements
-                var ifcRelAggregates = Object.IsDecomposedBy.SelectMany(r => r.RelatedObjects);
+                IEnumerable<IIfcObjectDefinition> ifcRelAggregates = Object.IsDecomposedBy.SelectMany(r => r.RelatedObjects);
                 if (ifcRelAggregates != null)
                 {
                     foreach (var SpatialStructure in ifcRelAggregates)
