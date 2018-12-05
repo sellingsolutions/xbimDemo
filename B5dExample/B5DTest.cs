@@ -25,7 +25,7 @@ namespace B5dExample
          *  We will NOT store meshes and blobs inside of the Starcounter database, we will simply be storing a reference to the .gltf file 
          *  Each B5dObject that has 'phsyical' properties such as geometry will have a url to a .gltf file
          * 
-
+         *
          *
          * 1. Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
          * 2. Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
