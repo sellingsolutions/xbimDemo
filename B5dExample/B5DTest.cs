@@ -18,8 +18,12 @@ namespace B5dExample
         private IFCRepository ifcRepo = new IFCRepository();
 
         /*  We don't have to map the ifc location/3d/geometry properties
-         *  We can just convert each ifc object to obj and then to glTF and store the glTF properties in Starcounter
-         *
+         *  We can just convert each ifc object to .obj and then to .glTF and store the glTF properties in Starcounter
+         *  
+         *  Our mission for the demo is to convert ifc models to our B5d data model and save it to the Starcounter database
+         *  We will circumvent the complexity of CSG volume geometry in the ifc model by simply converting to .obj and then to .gltf
+         *  We will NOT store meshes and blobs inside of the Starcounter database, we will simply be storing a reference to the .gltf file 
+         *  Each B5dObject that has 'phsyical' properties such as geometry will have a url to a .gltf file
          * 
 
          *
