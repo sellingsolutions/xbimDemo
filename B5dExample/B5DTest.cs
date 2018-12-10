@@ -4,12 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BuildcraftCore.B5D;
-using Xbim.Ifc;
+using Xbim.Ifc4;
 using Xbim.Ifc4.Interfaces;
-using Xbim.Ifc4.MeasureResource;
-using BuildcraftCore.B5D.ProjectNodes;
-using BuildcraftCore.B5D.PropertyRefs;
 
+using BuildcraftCore.B5D.PropertyRefs;
+using BuildcraftCore.B5D.Relationships;
+using B5dExample.RelationshipFactories.Core;
+
+using Starcounter;
+using Starcounter.Query.Execution;
 
 namespace B5dExample
 {
@@ -27,93 +30,47 @@ namespace B5dExample
          * 
          *
          *
-         * 1. Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
+         * --------------------------------------------------------------------------------------------------
+         * ----------------------------------- Core Relationships -------------------------------------------
+         * 1. Use isDecomposedBy to recursively create nodes for Project, Site, Building, Story and Space 
          * 2. Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
          * 3. Use isDefinedBy to retrieve all of the properties for each node
+         * --------------------------------------------------------------------------------------------------
          * 4. 
+         * 5. ifcRelAssociatesClassification
         */
-
 
         public void CreateProjectTree (IIfcProject ifcProject)
         {
-            B5dProjectNode b5dProject = new B5dProjectNode();
-
             BuildTree(null, null, ifcProject);
-
         }
 
         public B5dProjectNode BuildTree (B5dObject b5dParent, IIfcObjectDefinition ifcParent, IIfcObjectDefinition ifcChild)
         {
-            B5dProjectNode b5dChild = CreateNodeFrom(ifcChild);
+            B5dProjectNode b5dChild = IfcObjectConverter.Convert(ifcChild);
             if (b5dParent != null)
             {
-                B5dProjectNodeChild ChildRelationship = CreateNodeChildFrom(b5dParent, b5dChild);
-            }
-
-            // Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
-            if (ifcChild is IIfcSpatialStructureElement spatialElement)
-            {
-                IEnumerable<IIfcProduct> elements = spatialElement.ContainsElements.SelectMany(rel => rel.RelatedElements);
-                foreach (var element in elements)
-                {
-                    BuildTree(b5dChild, ifcChild, element);
-                }
-            }
-
-            // Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
-            foreach (var relatedObject in ifcChild.IsDecomposedBy.SelectMany(r => r.RelatedObjects))
-            {
-                BuildTree(b5dChild, ifcChild, relatedObject);
-            }
-
-            if (ifcChild is IIfcObject ifcObject)
-            {
-                var props = ifcObject.IsDefinedBy
-                .Where(r => r.RelatingPropertyDefinition is IIfcPropertySet)
-                .SelectMany(r => ((IIfcPropertySet)r.RelatingPropertyDefinition).HasProperties)
-                .OfType<IIfcPropertySingleValue>();
-
-                foreach (var prop in props)
-                {
-                    ifcPropertyConverter.ConvertProperty(prop, b5dChild);
-                }
+                B5dProjectNodeChild ChildRelationship = B5dProjectNodeChild.CreateNodeChildRelation(b5dParent, b5dChild);
             }
             
+            if (ifcChild is IIfcObject ifcObject)
+            {
+                // Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
+                foreach (var ifcSpatialElement in RelContainedInSpatialStructure.ConvertElementsIn(ifcObject))
+                {
+                    BuildTree(b5dChild, ifcChild, ifcSpatialElement);
+                }
+                // Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
+                foreach (var ifcSpatialStructure in RelAggregates.ConvertSpatialStructuresIn(ifcObject))
+                {
+                    BuildTree(b5dChild, ifcChild, ifcSpatialStructure);
+                }
+
+                // Use isDefinedBy to convert all of the ifcProperties
+                PropertyConverter.ConvertProperties(ifcObject, b5dChild);
+            }
 
             return b5dChild;
-        }
-
-        public B5dProjectNode CreateNodeFrom(IIfcObjectDefinition ifcObject)
-        {
-            B5dProjectNode b5dNode = new B5dProjectNode()
-            {
-                TypeSpecifier = ifcObject.GetType().Name,
-                Name = ifcObject.Name,
-                WhatIs = new B5dPhysical()
-                {
-                    TypeSpecifier = ifcObject.GetType().Name,
-                    Name = ifcObject.Name
-                }
-            };
-
-            IfcRoot b5dIfcObject = new IfcRoot()
-            {
-                ExternalIfcGlobalId = ifcObject.GlobalId,
-                B5dObject = b5dNode
-            };
-
-            return b5dNode;
-        }
-
-        public B5dProjectNodeChild CreateNodeChildFrom(B5dObject b5dParent, B5dObject b5dChild)
-        {
-            B5dProjectNodeChild ChildRelationship = new B5dProjectNodeChild()
-            {
-                // A Space [WhatIs] is a NodeChild to [ToWhat] the Story
-                WhatIs = b5dChild,
-                ToWhat = b5dParent
-            };
-            return ChildRelationship;
         }
     }
 }

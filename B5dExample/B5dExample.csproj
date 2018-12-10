@@ -101,12 +101,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IfcObjectConverter.cs" />
     <Compile Include="B5DTest.cs" />
+    <Compile Include="FileRef.cs" />
+    <Compile Include="GltfRef.cs" />
+    <Compile Include="PropertyConverter.cs" />
+    <Compile Include="RelationshipFactories\Core\RelAggregates.cs" />
+    <Compile Include="RelationshipFactories\RelAssociatesClassification.cs" />
     <Compile Include="IFCRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RelationshipFactories\RelationshipFactory.cs" />
+    <Compile Include="RelationshipFactories\Core\RelContainedInSpatialStructure.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="database-recreate.bat" />
     <None Include="packages.config" />
     <None Include="SampleHouse.ifc" />
   </ItemGroup>

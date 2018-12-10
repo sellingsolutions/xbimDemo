@@ -1,13 +1,39 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+
 using BuildcraftCore.B5D;
 using BuildcraftCore.B5D.PropertyRefs;
 using Xbim.Ifc4.Interfaces;
 
 namespace B5dExample
 {
-    public class ifcPropertyConverter
+    public class PropertyConverter
     {
-        static public B5dProperty ConvertProperty(IIfcPropertySingleValue ifcPropValue, B5dObject propOwner)
+        public static List<B5dProperty> ConvertProperties(IIfcObject ifcObject, B5dObject b5dObject)
+        {
+
+            var ifcProperties = GetProperties(ifcObject);
+            var b5dProperties = new List<B5dProperty>();
+            foreach (var prop in ifcProperties)
+            {
+                var b5dProperty = PropertyConverter.ConvertProperty(prop, b5dObject);
+                b5dProperties.Add(b5dProperty);
+            }
+
+            return b5dProperties;
+        }
+
+        public static IEnumerable<IIfcPropertySingleValue> GetProperties(IIfcObject ifcObject)
+        {
+            var props = ifcObject.IsDefinedBy
+               .Where(r => r.RelatingPropertyDefinition is IIfcPropertySet)
+               .SelectMany(r => ((IIfcPropertySet)r.RelatingPropertyDefinition).HasProperties)
+               .OfType<IIfcPropertySingleValue>();
+            return props;
+        }
+        public static B5dProperty ConvertProperty(IIfcPropertySingleValue ifcPropValue, B5dObject propOwner)
         {
             if (ifcPropValue.NominalValue == null)
             {

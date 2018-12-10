@@ -17,11 +17,13 @@ namespace B5dExample
 
             Db.Transact(() => 
             {
-                var root = Db.SQL($"SELECT r FROM {typeof(IfcRoot)} r WHERE r.{nameof(IfcRoot.ExternalIfcGlobalId)} = ?", ifcProjectID).FirstOrDefault();
-                if (root == null)
-                {
-                    new B5DTest().CreateProjectTree(ifcProject);
-                }
+                new B5DTest().CreateProjectTree(ifcProject);
+
+                //var root = Db.SQL($"SELECT r FROM {typeof(IfcRoot)} r WHERE r.{nameof(IfcRoot.ExternalIfcGlobalId)} = ?", ifcProjectID).FirstOrDefault();
+                //if (root == null)
+                //{
+                //    new B5DTest().CreateProjectTree(ifcProject);
+                //}
 
             });
 
