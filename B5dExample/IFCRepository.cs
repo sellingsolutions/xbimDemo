@@ -16,6 +16,17 @@ namespace B5dExample
         private const string DefaultPath = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName;
 
         public IfcStore Model { get; set; }
+        public XbimEditorCredentials Editor = new XbimEditorCredentials
+        {
+            ApplicationDevelopersName = "You",
+            ApplicationFullName = "Your app",
+            ApplicationIdentifier = "Your app ID",
+            ApplicationVersion = "4.0",
+            //your user
+            EditorsFamilyName = "Santini Aichel",
+            EditorsGivenName = "Johann Blasius",
+            EditorsOrganisationName = "Independent Architecture"
+        };
 
         public IFCRepository(string Path = DefaultPath)
         {

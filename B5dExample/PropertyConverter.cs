@@ -33,6 +33,7 @@ namespace B5dExample
                .OfType<IIfcPropertySingleValue>();
             return props;
         }
+
         public static B5dProperty ConvertProperty(IIfcPropertySingleValue ifcPropValue, B5dObject propOwner)
         {
             if (ifcPropValue.NominalValue == null)

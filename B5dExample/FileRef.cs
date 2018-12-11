@@ -15,5 +15,6 @@ namespace B5dExample
         public string MimeType { get; set; }
         public string Extension { get; set; }
         public long FileSize { get; set; }
+
     }
 }

@@ -18,7 +18,7 @@ namespace B5dExample.RelationshipFactories.Core
     /// </summary>
     public class RelAggregates
     {
-        public static IEnumerable<IIfcObjectDefinition> ConvertSpatialStructuresIn(IIfcObject ifcObject)
+        public static IEnumerable<IIfcObjectDefinition> GetSpatialStructuresIn(IIfcObject ifcObject)
         {
             // Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
             var spatialStructures = ifcObject.IsDecomposedBy.SelectMany(r => r.RelatedObjects);

@@ -18,7 +18,7 @@ namespace B5dExample.RelationshipFactories.Core
     /// </summary>
     public class RelContainedInSpatialStructure
     {
-        public static IEnumerable<IIfcProduct> ConvertElementsIn(IIfcObject ifcObject)
+        public static IEnumerable<IIfcProduct> GetElementsIn(IIfcObject ifcObject)
         {
             // Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
             if (ifcObject is IIfcSpatialStructureElement spatialElement)

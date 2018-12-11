@@ -18,7 +18,11 @@ namespace B5dExample
 {
     public class B5DTest
     {
-        private IFCRepository ifcRepo = new IFCRepository();
+        /*
+         * Row row = Db.SQL($"SELECT node, ifcRoot FROM {typeof(B5dProjectNode)} node" +
+                        $" JOIN {typeof(IfcRoot)} ifcRoot ON ifcRoot.{nameof(IfcRoot.B5dObject)} = node" +
+                        $" WHERE ifcRoot.{nameof(IfcRoot.ExternalIfcGlobalId)} = ?", ifcObjectGuid).FirstOrDefault() as Row;
+         */
 
         /*  We don't have to map the ifc location/3d/geometry properties
          *  We can just convert each ifc object to .obj and then to .glTF and store the glTF properties in Starcounter
@@ -38,7 +42,13 @@ namespace B5dExample
          * --------------------------------------------------------------------------------------------------
          * 4. 
          * 5. ifcRelAssociatesClassification
+         * 
+         * 
+         * 1. The core geometry objects get converted
+         * 2. We use the 
         */
+
+        B5dProjectNode currentProject = null;
 
         public void CreateProjectTree (IIfcProject ifcProject)
         {
@@ -48,6 +58,16 @@ namespace B5dExample
         public B5dProjectNode BuildTree (B5dObject b5dParent, IIfcObjectDefinition ifcParent, IIfcObjectDefinition ifcChild)
         {
             B5dProjectNode b5dChild = IfcObjectConverter.Convert(ifcChild);
+            if (ifcChild is IIfcProject)
+            {
+                currentProject = b5dChild;
+            }
+            else
+            {
+                GltfRef.TryCreatingGltfRef(ifcChild.GlobalId.ToString(), currentProject, b5dChild);
+            }
+
+
             if (b5dParent != null)
             {
                 B5dProjectNodeChild ChildRelationship = B5dProjectNodeChild.CreateNodeChildRelation(b5dParent, b5dChild);
@@ -56,12 +76,13 @@ namespace B5dExample
             if (ifcChild is IIfcObject ifcObject)
             {
                 // Use containsElements to recursively create nodes for Window, Door, Slab, Wall etc
-                foreach (var ifcSpatialElement in RelContainedInSpatialStructure.ConvertElementsIn(ifcObject))
+                foreach (var ifcSpatialElement in RelContainedInSpatialStructure.GetElementsIn(ifcObject))
                 {
                     BuildTree(b5dChild, ifcChild, ifcSpatialElement);
                 }
+
                 // Use isDecomposedy to recursively create nodes for Project, Site, Building, Story and Space 
-                foreach (var ifcSpatialStructure in RelAggregates.ConvertSpatialStructuresIn(ifcObject))
+                foreach (var ifcSpatialStructure in RelAggregates.GetSpatialStructuresIn(ifcObject))
                 {
                     BuildTree(b5dChild, ifcChild, ifcSpatialStructure);
                 }
