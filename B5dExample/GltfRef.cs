@@ -8,13 +8,13 @@ using System.IO;
 using Xbim.Ifc4;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
+using System;
 
 namespace B5dExample
 {
     [Database]
     public class GltfRef: FileRef
     {
-        private const string BasePath = "C:\\Users\\zno\\Documents\\Conversions\\";
 
         public static GltfRef TryCreatingGltfRef(string ifcObjectGuid, B5dProjectNode project, B5dObject b5dObject)
         {
@@ -23,7 +23,8 @@ namespace B5dExample
             {
                 return existingRef;
             }
-
+            string documentsDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+            string conversionPath = $"{documentsDirectory}\\Conversions";
 
             var projectName = project.Name;
             var b5dObjectType = b5dObject.TypeSpecifier.ToLower();
@@ -31,7 +32,7 @@ namespace B5dExample
             // The ifcTo3DTiles conversion renames WallStandardCase to Wall
             b5dObjectType = b5dObjectType.Replace("wallstandardcase", "wall");
 
-            var ifcDirectory = $"{BasePath}\\Conversion_{projectName}\\IFCs";
+            var ifcDirectory = $"{conversionPath}\\Conversion_{projectName}\\IFCs";
             var files = Directory.GetFiles(ifcDirectory);
             var ifcFiles = files.Where(f => f.ToLower().Contains(b5dObjectType));
             if (ifcFiles.Count() == 0)
