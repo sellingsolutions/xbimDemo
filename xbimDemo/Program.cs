@@ -19,20 +19,18 @@ namespace xbimDemo
     class Program
     {
 
-        static string ModelName = "albanova.ifc";
-        static string ifcModelPath = "\\\\Mac\\Home\\Documents\\IFC_Files\\" + ModelName;
+        static string ModelName = "albano_hus1.ifc";
+        //static string ifcModelPath = "\\\\Mac\\Home\\Documents\\IFC_Files\\" + ModelName;
+        static string ifcModelPath = "\\\\Mac\\AllFiles\\Volumes\\Macintosh HD\\Dropbox_ss\\3D Models\\ifc\\Albano\\" + ModelName;
 
         static IFCRepository ifcRepo = new IFCRepository(ifcModelPath);
 
         static void Main(string[] args)
         {
-            var buildings = ifcRepo.Model.Instances.Where<IIfcBuilding>(r => r.EntityLabel > 0);
-            var stories = ifcRepo.Model.Instances.Where<IIfcBuildingStorey>(r => r.EntityLabel > 0);
+            var splitter = new Splitter();
 
-            var zones = ifcRepo.Model.Instances.Where<IIfcZone>(r => r.EntityLabel > 0);
-
-            Console.WriteLine($"buildings {buildings.Count()} stories {stories.Count()} zones {zones.Count()}");
-
+            splitter.SplitIntoStories(ifcRepo.Model);
+            
             Console.WriteLine("Press Any Key to Exit");
             Console.ReadKey();
         }

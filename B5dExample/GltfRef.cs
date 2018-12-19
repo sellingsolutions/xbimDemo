@@ -15,7 +15,6 @@ namespace B5dExample
     [Database]
     public class GltfRef: FileRef
     {
-
         public static GltfRef TryCreatingGltfRef(string ifcObjectGuid, B5dProjectNode project, B5dObject b5dObject)
         {
             var existingRef = DbLinq.Objects<GltfRef>().FirstOrDefault(o => o.BelongsTo == b5dObject);
@@ -23,6 +22,7 @@ namespace B5dExample
             {
                 return existingRef;
             }
+
             string documentsDirectory = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
             string conversionPath = $"{documentsDirectory}\\Conversions";
 

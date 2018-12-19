@@ -91,6 +91,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Spaces.cs" />
+    <Compile Include="Splitter.cs" />
     <Compile Include="WEXBIMFactory.cs" />
   </ItemGroup>
   <ItemGroup>
