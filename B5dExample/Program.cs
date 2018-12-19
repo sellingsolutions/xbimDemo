@@ -8,11 +8,13 @@ namespace B5dExample
 {
     class Program
     {
-        static IFCRepository ifcRepo = new IFCRepository();
+        static string ModelName = "20160125OTC-Conference Center-IFC4";
+        static string ifcModelPath = "\\\\Mac\\Home\\Documents\\IFC_Files\\" + ModelName;
+
+        static IFCRepository ifcRepo = new IFCRepository(ifcModelPath);
 
         static void Main()
         {
-
 
             using (var model = ifcRepo.Model)
             {

@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuildcraftCore", "..\Buildc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "B5dExample", "B5dExample\B5dExample.csproj", "{ECDD8422-8FA1-47C1-A937-679E840F92D8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "xbimDemo", "xbimDemo\xbimDemo.csproj", "{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,14 @@ Global
 		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Release|Any CPU.ActiveCfg = Release|x64
 		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Release|x64.ActiveCfg = Release|x64
 		{ECDD8422-8FA1-47C1-A937-679E840F92D8}.Release|x64.Build.0 = Release|x64
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Debug|x64.Build.0 = Debug|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Release|x64.ActiveCfg = Release|Any CPU
+		{9FAC2D6C-C5BA-46D5-A13C-B31101BD6554}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

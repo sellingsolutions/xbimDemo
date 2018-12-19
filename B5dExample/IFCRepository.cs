@@ -7,30 +7,42 @@ using System.Linq;
 using Xbim.Ifc;
 using Xbim.Ifc4.Interfaces;
 using Xbim.Ifc4.MeasureResource;
+using System.IO;
 
 namespace B5dExample
 {
     public class IFCRepository
     {
-        private const string ModelName = "SampleHouse.ifc";
-        private const string DefaultPath = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName;
+        private const string DefaultModelName = "SampleHouse.ifc";
+        private const string ProjectPath = "C:\\Users\\zno\\source\\repos\\xbimDemo\\B5dExample";
+        private const string DefaultModelPath = ProjectPath + "\\" + DefaultModelName;
 
         public IfcStore Model { get; set; }
         public XbimEditorCredentials Editor = new XbimEditorCredentials
         {
-            ApplicationDevelopersName = "You",
-            ApplicationFullName = "Your app",
-            ApplicationIdentifier = "Your app ID",
+            ApplicationDevelopersName = "Alexander Selling",
+            ApplicationFullName = "Buildcraft",
+            ApplicationIdentifier = "se.buildcraft",
             ApplicationVersion = "4.0",
             //your user
-            EditorsFamilyName = "Santini Aichel",
-            EditorsGivenName = "Johann Blasius",
-            EditorsOrganisationName = "Independent Architecture"
+            EditorsFamilyName = "Alexander Selling",
+            EditorsGivenName = "Alexander Selling",
+            EditorsOrganisationName = "Buildcraft AB"
         };
 
-        public IFCRepository(string Path = DefaultPath)
+        public IFCRepository(string Path = DefaultModelPath)
         {
-            Model = IfcStore.Open(Path);
+            try
+            {
+                Model = IfcStore.Open(Path);
+                var modelSize = Model.Instances.Count;
+                Console.WriteLine(modelSize);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+
         }
 
         public IIfcObject GetProduct(string ifcProductID)

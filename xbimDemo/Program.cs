@@ -8,8 +8,7 @@ using Xbim.Ifc;
 using Xbim.ModelGeometry.Scene;
 using B5dExample.RelationshipFactories;
 using B5dExample;
-using Xbim.Ifc;
-using Xbim.Ifc2x3.Interfaces;
+using Xbim.Ifc4.Interfaces;
 
 using Xbim.Ifc4.MeasureResource;
 using System.Reflection;
@@ -19,12 +18,20 @@ namespace xbimDemo
 {
     class Program
     {
+
+        static string ModelName = "albanova.ifc";
+        static string ifcModelPath = "\\\\Mac\\Home\\Documents\\IFC_Files\\" + ModelName;
+
+        static IFCRepository ifcRepo = new IFCRepository(ifcModelPath);
+
         static void Main(string[] args)
         {
+            var buildings = ifcRepo.Model.Instances.Where<IIfcBuilding>(r => r.EntityLabel > 0);
+            var stories = ifcRepo.Model.Instances.Where<IIfcBuildingStorey>(r => r.EntityLabel > 0);
 
-            string ModelName = "albano.ifc";
-            string Path = "C:\\Users\\zno\\source\\repos\\xbimDemo\\xbimDemo\\" + ModelName;
-            
+            var zones = ifcRepo.Model.Instances.Where<IIfcZone>(r => r.EntityLabel > 0);
+
+            Console.WriteLine($"buildings {buildings.Count()} stories {stories.Count()} zones {zones.Count()}");
 
             Console.WriteLine("Press Any Key to Exit");
             Console.ReadKey();
